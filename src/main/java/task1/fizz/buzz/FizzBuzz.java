@@ -12,14 +12,14 @@ public class FizzBuzz {
 
     private static void moduleDivision() {
 
-        List<Integer> ints = new ArrayList<>();
+        List<Integer> ints = new ArrayList<>(100);
 
         int test = 1;
-
         while (test <= 100) {
             ints.add(test);
             test++;
         }
+
         ints.forEach((x) -> {
             Object t = unknown(x);
             System.out.println(t);

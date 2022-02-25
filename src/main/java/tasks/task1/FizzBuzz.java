@@ -1,8 +1,7 @@
-package task1.fizz.buzz;
+package tasks.task1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
 public class FizzBuzz {
 

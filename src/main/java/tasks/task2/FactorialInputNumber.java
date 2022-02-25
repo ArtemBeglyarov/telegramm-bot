@@ -1,7 +1,6 @@
-package task2;
+package tasks.task2;
 
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class FactorialInputNumber {
     public static void main(String[] args) {
@@ -33,3 +32,4 @@ public class FactorialInputNumber {
         System.out.println(factorial);
     }
 }
+

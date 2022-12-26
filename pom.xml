@@ -15,7 +15,7 @@
         <telegram.version>5.0.1</telegram.version>
         <spring.boot.version>2.6.2</spring.boot.version>
         <lombok.version>1.18.8</lombok.version>
-        <telegram.version>5.0.1</telegram.version>
+        <telegram.version>5.4.0.1</telegram.version>
     </properties>
 
     <dependencies>

@@ -4,19 +4,14 @@ import lombok.SneakyThrows;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
-import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeDefault;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.telegram.bot.config.BotConfig;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Component
@@ -27,15 +22,17 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     public TelegramBot(BotConfig botConfig) {
         this.botConfig = botConfig;
-        List<BotCommand> listCommand = new ArrayList<>();
-        listCommand.add(new BotCommand("/rat","spin Rat"));
-        listCommand.add(new BotCommand("/frog","spin frog"));
-        listCommand.add(new BotCommand("/comissar","spin comissar"));
-        try {
-            this.execute(new SetMyCommands(listCommand, new BotCommandScopeDefault(), null));
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
+//        List<BotCommand> listCommand = new ArrayList<>();
+//        listCommand.add(new BotCommand("/rat","spin Rat"));
+//        listCommand.add(new BotCommand("/frog","spin frog"));
+//        listCommand.add(new BotCommand("/comissar","spin comissar"));
+//        listCommand.add(new BotCommand("/surrender","you gave up"));
+//        listCommand.add(new BotCommand("/latch","ух ты бля"));
+//        try {
+//            this.execute(new SetMyCommands(listCommand,null, null));
+//        } catch (TelegramApiException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -56,6 +53,8 @@ public class TelegramBot extends TelegramLongPollingBot {
                 ? update.getMessage().getText().toLowerCase() : null;
 
         String chatId = update.getMessage().getChatId().toString();
+        String firstName = update.getMessage().getFrom().getUserName();
+
 
         switch (message) {
 
@@ -68,8 +67,14 @@ public class TelegramBot extends TelegramLongPollingBot {
             case "/frog":
                 spinFrog(chatId);
                 break;
-            case "/comissar":
-                сomissar(chatId);
+            case "/commissar":
+                сommissar(chatId);
+                break;
+            case "/surrender":
+                surrender(chatId,firstName);
+                break;
+            case "/latch":
+                latch(chatId);
                 break;
         }
     }
@@ -100,7 +105,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     }
     @SneakyThrows
-    private void сomissar(String chatId) {
+    private void сommissar(String chatId) {
         SendAnimation sendAnimation = new SendAnimation();
         File file = new File("C:\\Users\\abeglyarov\\Documents\\telegramm-bot\\src\\main\\resources\\image\\сomissar.gif");
         InputFile inputFile = new InputFile(file);
@@ -109,16 +114,28 @@ public class TelegramBot extends TelegramLongPollingBot {
         execute(sendAnimation);
     }
 
+    @SneakyThrows
+    private void latch(String chatId) {
+        SendAudio audio = new SendAudio();
+        File file = new File("C:\\Users\\abeglyarov\\Documents\\telegramm-bot\\src\\main\\resources\\static\\ух ты бля.mp3");
+        InputFile inputFile = new InputFile(file);
+        audio.setAudio(inputFile);
+        audio.setChatId(chatId);
+        execute(audio);
+    }
+
+    @SneakyThrows
+    private void surrender(String chatId, String name) {
+//        String sur = "@" + name + " вы официально сдались";
+        String sur = "Пользователь @" + name + " официально сдался";
+        sendMessage(chatId, sur);
+    }
+
+    @SneakyThrows
     private void sendMessage(String chatId, String textToSend) {
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));
         message.setText(textToSend);
-
-        try {
-            execute(message);
-        } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
-        }
-
+        execute(message);
     }
 }

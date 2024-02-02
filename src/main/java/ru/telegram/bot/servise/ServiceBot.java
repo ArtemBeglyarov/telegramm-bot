@@ -1,67 +1,17 @@
 package ru.telegram.bot.servise;
 
-import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.bots.DefaultBotOptions;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
-import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.telegram.bot.config.BotConfig;
 
 import java.io.File;
 
-
-@Component
-@AllArgsConstructor
-public class TelegramBot extends TelegramLongPollingBot {
-
-    private final BotConfig botConfig;
-
-    @Override
-    public String getBotUsername() {
-        return botConfig.getName();
-    }
-
-    @Override
-    public String getBotToken() {
-        return botConfig.getToken();
-    }
-
-    @Override
-    public void onUpdateReceived(Update update) {
-        String message = ObjectUtils.allNotNull(update.hasMessage(), update.getMessage().hasText())
-                ? update.getMessage().getText().toLowerCase() : null;
-
-        String chatId = update.getMessage().getChatId().toString();
-        String firstName = update.getMessage().getFrom().getUserName();
-
-
-        switch (message) {
-
-            case "/start":
-                startCommand(chatId, update.getMessage().getChat().getFirstName());
-                break;
-            case "/rat":
-                spinRat(chatId);
-                break;
-            case "/frog":
-                spinFrog(chatId);
-                break;
-            case "/commissar":
-                —Åommissar(chatId);
-                break;
-            case "/surrender":
-                surrender(chatId,firstName);
-                break;
-            case "/latch":
-                latch(chatId);
-                break;
-        }
+public class ServiceBot extends TelegramBot {
+    public ServiceBot(BotConfig botConfig) {
+        super(botConfig);
     }
 
     private void startCommand(String chatId, String firstName) {
@@ -90,9 +40,9 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     }
     @SneakyThrows
-    private void —Åommissar(String chatId) {
+    private void Òommissar(String chatId) {
         SendAnimation sendAnimation = new SendAnimation();
-        File file = new File("src\\main\\resources\\image\\—Åomissar.gif");
+        File file = new File("src\\main\\resources\\image\\Òomissar.gif");
         InputFile inputFile = new InputFile(file);
         sendAnimation.setAnimation(inputFile);
         sendAnimation.setChatId(chatId);
@@ -102,7 +52,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     @SneakyThrows
     private void latch(String chatId) {
         SendAudio audio = new SendAudio();
-        File file = new File("src\\main\\resources\\static\\—É—Ö —Ç—ã –±–ª—è.mp3");
+        File file = new File("src\\main\\resources\\static\\Ûı Ú˚ ·Îˇ.mp3");
         InputFile inputFile = new InputFile(file);
         audio.setAudio(inputFile);
         audio.setChatId(chatId);
@@ -111,8 +61,8 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @SneakyThrows
     private void surrender(String chatId, String name) {
-//        String sur = "@" + name + " –≤—ã –æ—Ñ–∏—Ü–∏–∞–ª—å–Ω–æ —Å–¥–∞–ª–∏—Å—å";
-        String sur = "–ü–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—å @" + name + " –æ—Ñ–∏—Ü–∏–∞–ª—å–Ω–æ —Å–¥–∞–ª—Å—è";
+//        String sur = "@" + name + " ‚˚ ÓÙËˆË‡Î¸ÌÓ Ò‰‡ÎËÒ¸";
+        String sur = "œÓÎ¸ÁÓ‚‡ÚÂÎ¸ @" + name + " ÓÙËˆË‡Î¸ÌÓ Ò‰‡ÎÒˇ";
         sendMessage(chatId, sur);
     }
 

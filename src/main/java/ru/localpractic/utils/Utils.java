@@ -1,9 +1,12 @@
 package ru.localpractic.utils;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class Utils {
 
@@ -21,24 +24,33 @@ public class Utils {
     }
 
     public static void main(String[] args) {
-        String str = "2009-12-02T11:25:25";
+//        List list1 = new ArrayList();
+//        list1.add(1);
+//
+//        List list2 = Collections.unmodifiableList(list1);
+//        List list3 = Collections.unmodifiableList(new ArrayList<>(list1));
+//
+//        list1.add(2);
+//        list1.add(3);
+//
+//        System.out.println(list1);
+//        System.out.println(list2);
+//        System.out.println(list3);
 
-// parse string to `LocalDateTime`
-        LocalDateTime dateTime = LocalDateTime.parse(str);
-        System.out.println(dateTime);
+
+            Stream<Integer> mainStream = Stream.of(1,2,3,4,5,6,7,8,9,10);
+            List<Integer> listEven = mainStream.filter(item -> item % 2 == 0).collect(toList());
+            System.out.println(listEven);
+
+            List<Integer> listOdd = mainStream.filter(item -> item % 2 != 0).collect(toList());
+            System.out.println(listOdd);
 //
-//        List<String> l = new ArrayList<>();
-//        String a = "fwfwfwfwfwfwfwfwf";
-//        String b = "cvcvcvcvcvcvcvcvcv";
-//        String c = "dcvcvcv";
-//        String d = "dsdfdfd";
-//
-//        l.add(a);
-//        l.add(b);
-//        l.add(c);
-//        l.add(d);
-//
-//        System.out.println(l.toString());
+//            List<String> friendsM =  List.of("Peter", "Paul");
+//            friendsM.add("Jake");
+//            List<String> friendsF =  new ArrayList<>(Arrays.asList("Anna", "Sofia"));
+//            friendsF.add("Sarah");
+//            Stream.concat(friendsM.stream(),friendsF.stream())
+//                    .forEach(System.out::println);
     }
 
 
@@ -46,8 +58,6 @@ public class Utils {
 
     public MseID checkAccess (Long  jobExecutionID, String userName, Long MSEProcessID, String nosologyID ) {
         MseID mseID = new MseID();
-
-
         return mseID;
     }
 

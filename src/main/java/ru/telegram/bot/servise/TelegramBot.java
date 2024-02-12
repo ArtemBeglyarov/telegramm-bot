@@ -56,10 +56,13 @@ public class TelegramBot extends TelegramLongPollingBot {
                 сommissar(chatId);
                 break;
             case "/surrender":
-                surrender(chatId,firstName);
+                surrender(chatId, firstName);
                 break;
             case "/latch":
                 latch(chatId);
+                break;
+            case "/scream":
+                scream(chatId);
                 break;
         }
     }
@@ -89,6 +92,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         execute(sendAnimation);
 
     }
+
     @SneakyThrows
     private void сommissar(String chatId) {
         SendAnimation sendAnimation = new SendAnimation();
@@ -103,6 +107,15 @@ public class TelegramBot extends TelegramLongPollingBot {
     private void latch(String chatId) {
         SendAudio audio = new SendAudio();
         File file = new File("src\\main\\resources\\static\\ух ты бля.mp3");
+        InputFile inputFile = new InputFile(file);
+        audio.setAudio(inputFile);
+        audio.setChatId(chatId);
+        execute(audio);
+    }
+    @SneakyThrows
+    private void scream(String chatId) {
+        SendAudio audio = new SendAudio();
+        File file = new File("src\\main\\resources\\static\\scream.mp3");
         InputFile inputFile = new InputFile(file);
         audio.setAudio(inputFile);
         audio.setChatId(chatId);

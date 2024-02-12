@@ -56,11 +56,6 @@ public class Utils {
 
 
 
-    public MseID checkAccess (Long  jobExecutionID, String userName, Long MSEProcessID, String nosologyID ) {
-        MseID mseID = new MseID();
-        return mseID;
-    }
-
 
 
 }

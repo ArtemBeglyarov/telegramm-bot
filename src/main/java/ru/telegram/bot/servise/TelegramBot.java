@@ -9,11 +9,13 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendSticker;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.telegram.bot.config.BotConfig;
 
 import java.io.File;
+import java.util.concurrent.CompletableFuture;
 
 
 @Component
@@ -34,6 +36,15 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+
+        CompletableFuture.runAsync(() -> {
+            getStringCommand(update);
+        });
+
+
+    }
+
+    private void getStringCommand(Update update) {
         String message = ObjectUtils.allNotNull(update.hasMessage(), update.getMessage().hasText())
                 ? update.getMessage().getText().toLowerCase() : null;
 
@@ -51,9 +62,6 @@ public class TelegramBot extends TelegramLongPollingBot {
                 break;
             case "/frog":
                 spinFrog(chatId);
-                break;
-            case "/commissar":
-                сommissar(chatId);
                 break;
             case "/surrender":
                 surrender(chatId, firstName);
@@ -94,16 +102,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     @SneakyThrows
-    private void сommissar(String chatId) {
-        SendAnimation sendAnimation = new SendAnimation();
-        File file = new File("src\\main\\resources\\image\\сomissar.gif");
-        InputFile inputFile = new InputFile(file);
-        sendAnimation.setAnimation(inputFile);
-        sendAnimation.setChatId(chatId);
-        execute(sendAnimation);
-    }
-
-    @SneakyThrows
     private void latch(String chatId) {
         SendAudio audio = new SendAudio();
         File file = new File("src\\main\\resources\\static\\ух ты бля.mp3");
@@ -112,6 +110,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         audio.setChatId(chatId);
         execute(audio);
     }
+
     @SneakyThrows
     private void scream(String chatId) {
         SendAudio audio = new SendAudio();

@@ -1,76 +1,71 @@
 package ru.telegram.bot.servise;
 
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
-import ru.telegram.bot.config.BotConfig;
+import ru.telegram.bot.domain.JavaSubject;
+import ru.telegram.bot.domain.Subject;
 
 import java.io.File;
 
-public class ServiceBot extends TelegramBot {
-    public ServiceBot(BotConfig botConfig) {
-        super(botConfig);
-    }
+@Component
+@RequiredArgsConstructor
+public class ServiceBot {
 
-    private void startCommand(String chatId, String firstName) {
+
+    public SendMessage startCommand(String chatId, String firstName) {
         String start = "Hello " + firstName;
-        sendMessage(chatId, start);
+         return sendMessage(chatId, start);
     }
 
     @SneakyThrows
-    private void spinRat(String chatId) {
+    public SendAnimation spinRat(String chatId) {
         SendAnimation sendAnimation = new SendAnimation();
         File file = new File("src\\main\\resources\\image\\rat-spinning.gif");
         InputFile inputFile = new InputFile(file);
         sendAnimation.setAnimation(inputFile);
         sendAnimation.setChatId(chatId);
-        execute(sendAnimation);
+        return sendAnimation;
     }
 
     @SneakyThrows
-    private void spinFrog(String chatId) {
+    public SendAnimation spinFrog(String chatId) {
         SendAnimation sendAnimation = new SendAnimation();
         File file = new File("src\\main\\resources\\image\\frog-spin-frog.gif");
         InputFile inputFile = new InputFile(file);
         sendAnimation.setAnimation(inputFile);
         sendAnimation.setChatId(chatId);
-        execute(sendAnimation);
-
-    }
-    @SneakyThrows
-    private void сommissar(String chatId) {
-        SendAnimation sendAnimation = new SendAnimation();
-        File file = new File("src\\main\\resources\\image\\сomissar.gif");
-        InputFile inputFile = new InputFile(file);
-        sendAnimation.setAnimation(inputFile);
-        sendAnimation.setChatId(chatId);
-        execute(sendAnimation);
+        return sendAnimation;
     }
 
     @SneakyThrows
-    private void latch(String chatId) {
+    public SendAudio latch(String chatId) {
         SendAudio audio = new SendAudio();
         File file = new File("src\\main\\resources\\static\\ух ты бля.mp3");
         InputFile inputFile = new InputFile(file);
         audio.setAudio(inputFile);
         audio.setChatId(chatId);
-        execute(audio);
+        return audio;
     }
 
     @SneakyThrows
-    private void surrender(String chatId, String name) {
-//        String sur = "@" + name + " вы официально сдались";
-        String sur = "Пользователь @" + name + " официально сдался";
-        sendMessage(chatId, sur);
+    public SendAudio scream(String chatId) {
+        SendAudio audio = new SendAudio();
+        File file = new File("src\\main\\resources\\static\\scream.mp3");
+        InputFile inputFile = new InputFile(file);
+        audio.setAudio(inputFile);
+        audio.setChatId(chatId);
+        return audio;
     }
-
     @SneakyThrows
-    private void sendMessage(String chatId, String textToSend) {
+    public SendMessage sendMessage(String chatId, String textToSend) {
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));
         message.setText(textToSend);
-        execute(message);
+        return message;
     }
 }

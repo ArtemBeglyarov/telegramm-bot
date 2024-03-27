@@ -33,7 +33,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
 
         Map<String, Class<?>> classForCommand = new HashMap<>();
-        classForCommand.put("sendmessage", SendMessage.class);
 
         CompletableFuture.runAsync(() -> {
             var command = messageProcessing.getCommand(update).getMethod();

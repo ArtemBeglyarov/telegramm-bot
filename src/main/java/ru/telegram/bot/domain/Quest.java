@@ -1,16 +1,23 @@
 package ru.telegram.bot.domain;
 
 import lombok.Data;
-import ru.telegram.bot.domain.enums.Label;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @Data
-public class Quest {
-    @Id
-    private Long id;
-    private String quest;
-    private Label label;
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false,exclude ={"pack","theme"})
+@ToString(callSuper = true,exclude ={"pack","theme"})
+public class Quest extends Subject {
+    private String answer;
+    @ManyToOne
+    private Pack pack;
+    @ManyToOne
+    private Theme theme;
 }

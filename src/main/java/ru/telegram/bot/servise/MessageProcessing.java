@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.telegram.bot.domain.Pack;
+import ru.telegram.bot.repository.PackRepository;
+
+import javax.annotation.PostConstruct;
 
 @Component
 @RequiredArgsConstructor
@@ -19,7 +23,6 @@ public class MessageProcessing {
 
         String chatId = update.getMessage().getChatId().toString();
         String firstName = update.getMessage().getFrom().getUserName();
-
 
         switch (message) {
             case "/start":

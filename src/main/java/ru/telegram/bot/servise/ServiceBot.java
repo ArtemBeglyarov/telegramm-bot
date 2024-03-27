@@ -7,8 +7,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
-import ru.telegram.bot.domain.JavaSubject;
-import ru.telegram.bot.domain.Subject;
 
 import java.io.File;
 
